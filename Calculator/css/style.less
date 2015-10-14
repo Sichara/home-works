@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.calculator {
+  margin: 0 auto;
+  width: 180px;
+  position: relative;
+}
+
+.num-list {
+  width: 60%;
+  display: inline-block;
+}
+
+.action-list {
+  width: 20%;
+  display: inline-block;
+  margin-left: 15%;
+}
+
+.num, .action {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  margin: 5px;
+  display: inline-block;
+
+  &:hover {
+    background: #ccc;
+  }
+}
+
+.eval-box, .eval {
+  height: 20px;
+  border: 1px solid #000;
+  margin: 5px;
+}
+
+.eval-box {
+  text-align: right;
+}
+
+.eval, .num, .action, .num-list, .action-list {
+  text-align: center;
+}
+
+.eval {
+
+  &:hover {
+    background: #ccc;
+  }
+}
