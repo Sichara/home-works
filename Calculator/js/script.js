@@ -53,19 +53,15 @@ window.addEventListener('load', function () {
         evalBox.value = String(resultEval);
     }
 
-    function eval(numberA, symbol, numberB) {
-        if (symbol === '+') {
-            return numberA + numberB;
-        }
-        if (symbol === '-') {
-            return numberA - numberB;
-        }
-        if (symbol === '*') {
-            return numberA * numberB;
-        }
-        if (symbol === '/') {
-            return numberA / numberB;
-        }
+    function eval(numberA, symbol, numberB) {//назови ее по другому, eval - очень не удачное название. toCalculate например
+        var actions = {
+			'+' : numberA + numberB,
+			'-' : numberA - numberB,
+			'*': numberA*numberB,
+			'/': numberA/numberB
+		};
+
+		return actions[symbol]; //так будет более изящно 
     }
 
     function evalResult() {
@@ -79,30 +75,44 @@ window.addEventListener('load', function () {
         resultEval = 0;
     }
 
-    function bindEventsNumClick() {
-        var i,
-            j;
+    // function bindEventsNumClick() {
+    //     var i,
+    //         j;
 
-        for (i = 0; i < arguments.length; i += 1) {
-            for (j = 0; j < arguments[i].length; j += 1) {
-                arguments[i][j].addEventListener('click', clickOnNumbers);
-            }
-        }
+    //     for (i = 0; i < arguments.length; i += 1) {
+    //         for (j = 0; j < arguments[i].length; j += 1) {
+    //             arguments[i][j].addEventListener('click', clickOnNumbers);
+    //         }
+    //     }
+    // }
+    // // Зачем тебе две одинаковые функции, сделай одну и передавай параметр clickOnNumbers и clickOnActions.
+
+    // function bindEventsActionsClick(buttons) {
+    //     var i,
+    //         j;
+
+
+    //         for (j = 0; j < arguments[i].length; j += 1) {
+    //             arguments[i][j].addEventListener('click', buttons);// двойная вложенность и arguments не опраданы, код только усложнился
+    //         }
+    //     }
+    // }
+    
+
+    // bindEventsNumClick(numList);
+    // bindEventsActionsClick(actionList);
+    
+    function bindEvent(buttons, action, handler) {
+        var i;
+
+		for(i = 0; i < buttons.length; i ++) {
+			buttons[i].addEventListener(action, handler);
+		}
     }
 
-    function bindEventsActionsClick() {
-        var i,
-            j;
+    bindEvent(numList, 'click', clickOnNumbers);
+    bindEvent(actionList, 'click', clickOnActions);
 
-        for (i = 0; i < arguments.length; i += 1) {
-            for (j = 0; j < arguments[i].length; j += 1) {
-                arguments[i][j].addEventListener('click', clickOnActions);
-            }
-        }
-    }
-
-    bindEventsNumClick(numList);
-    bindEventsActionsClick(actionList);
 
     evalBtn.addEventListener('click', evalResult);
 });
