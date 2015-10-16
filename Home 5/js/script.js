@@ -15,10 +15,10 @@
     }
 
     function print(message, whereToPut) {
-        whereToPut.innerHTML = '';
         var textElem = document.createElement('h1');
         var buttonElem = document.createElement('button');
 
+        whereToPut.innerHTML = '';
         textElem.classList.toggle('form-header');
         textElem.innerHTML = message;
 

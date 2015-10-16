@@ -11,7 +11,7 @@ window.addEventListener('load', function () {
     var resultEval = 0;
     var action = {
         symbol: '',
-        pushed: false
+        pushed: true
     };
 
 
@@ -46,19 +46,19 @@ window.addEventListener('load', function () {
             resultEval = number;
             action.symbol = this.innerHTML;
         } else {
-            resultEval = eval(resultEval, action.symbol, number);
+            resultEval = toCalculate(resultEval, action.symbol, number);
             action.symbol = this.innerHTML;
         }
 
         evalBox.value = String(resultEval);
     }
 
-    function eval(numberA, symbol, numberB) {//назови ее по другому, eval - очень не удачное название. toCalculate например
+    function toCalculate(numberA, symbol, numberB) {//назови ее по другому, toCalculate - очень не удачное название. toCalculate например
         var actions = {
-			'+' : numberA + numberB,
-			'-' : numberA - numberB,
-			'*': numberA*numberB,
-			'/': numberA/numberB
+			'+': numberA + numberB,
+			'-': numberA - numberB,
+			'*': numberA * numberB,
+			'/': numberA / numberB
 		};
 
 		return actions[symbol]; //так будет более изящно 
@@ -67,7 +67,7 @@ window.addEventListener('load', function () {
     function evalResult() {
         number = getCurrentNum();
         action.pushed = true;
-        resultEval = eval(resultEval, action.symbol, number);
+        resultEval = toCalculate(resultEval, action.symbol, number);
 
         action.symbol = '';
         evalBox.value = String(resultEval);
@@ -75,34 +75,7 @@ window.addEventListener('load', function () {
         resultEval = 0;
     }
 
-    // function bindEventsNumClick() {
-    //     var i,
-    //         j;
-
-    //     for (i = 0; i < arguments.length; i += 1) {
-    //         for (j = 0; j < arguments[i].length; j += 1) {
-    //             arguments[i][j].addEventListener('click', clickOnNumbers);
-    //         }
-    //     }
-    // }
-    // // Зачем тебе две одинаковые функции, сделай одну и передавай параметр clickOnNumbers и clickOnActions.
-
-    // function bindEventsActionsClick(buttons) {
-    //     var i,
-    //         j;
-
-
-    //         for (j = 0; j < arguments[i].length; j += 1) {
-    //             arguments[i][j].addEventListener('click', buttons);// двойная вложенность и arguments не опраданы, код только усложнился
-    //         }
-    //     }
-    // }
-    
-
-    // bindEventsNumClick(numList);
-    // bindEventsActionsClick(actionList);
-    
-    function bindEvent(buttons, action, handler) {
+   function bindEvent(buttons, action, handler) {
         var i;
 
 		for(i = 0; i < buttons.length; i ++) {
