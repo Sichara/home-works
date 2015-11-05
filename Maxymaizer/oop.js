@@ -50,31 +50,31 @@
 // Объединить несколько функций в одну
 function compose() {
 
-        function toArray(obj) {
-            var key;
-            var resultArr = [];
+    function toArray(obj) {
+        var key;
+        var resultArr = [];
 
-            for (key in obj) {
-                resultArr[key] = obj[key];
-            }
-            return resultArr;
+        for (key in obj) {
+            resultArr[key] = obj[key];
         }
-
-        var funcssToCompose = toArray(arguments);
-
-        function execute() {
-            funcssToCompose.map(function(funcToExec) {
-                return funcToExec();
-            });
-        }
-
-        return execute;
+        return resultArr;
     }
-    // function log1() {console.log(111);}
-    // function log2() {console.log(222);}
-    // function log3() {console.log(333);}
-    // var logAll = compose(log1, log2, log3);
-    // logAll();
+
+    var funcssToCompose = toArray(arguments);
+
+    function execute() {
+        funcssToCompose.map(function(funcToExec) {
+            return funcToExec();
+        });
+    }
+
+    return execute;
+}
+// function log1() {console.log(111);}
+// function log2() {console.log(222);}
+// function log3() {console.log(333);}
+// var logAll = compose(log1, log2, log3);
+// logAll();
 
 // Ключник
 function createKeeper() {
@@ -97,3 +97,43 @@ function createKeeper() {
 
     return mainObj;
 }
+
+// Реализовать класс на прототипах
+function Sequence(arr) {
+    this._data = arr;
+    this._index = 0;
+}
+
+Sequence.prototype.go = function(indexToGo) {
+    if (indexToGo < this._data.length - 1) {
+        this._index = indexToGo;
+    } else {
+        this._index = this._data.length - 1;
+    }
+
+    if (indexToGo < 0) {
+        this._index = 0;
+    }
+
+    return this._data[this._index];
+};
+
+Sequence.prototype.next = function() {
+    if (this._index + 1 < this._data.length - 1) {
+        this._index += 1;
+    } else {
+        this._index = 0;
+    }
+
+    return this._data[this._index];
+};
+
+Sequence.prototype.prev = function() {
+    if (this._index - 1 >= 0) {
+        this._index -= 1;
+    } else {
+        this._index = this._data.length - 1;
+    }
+
+    return this._data[this._index];
+};

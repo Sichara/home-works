@@ -147,11 +147,11 @@ function sumOnly100Plus(arr) {
 sumOnly100Plus([100]);
 
 function sumOnly100Plus(arr) {
-    return arr.reduce(function(prevItem, curentItem) {
+    return arr.reduce(function(result, curentItem) {
         if (typeof curentItem === 'number' && curentItem > 100) {
-            prevItem += curentItem;
+            result += curentItem;
         }
-        return prevItem;
+        return result;
     }, 0);
 }
 
@@ -323,6 +323,12 @@ function toArray(obj) {
     return resultArr;
 }
 
+function toArray(obj) {
+    return [].map.call(obj, function(value) {
+        return value;
+    });
+}
+
 // Преобразовать строку запроса (query string) в объект
 function queryStringToObject(queryString) {
     var arrayOfQueries = queryString.split('&');
@@ -343,17 +349,33 @@ function queryStringToObject(queryString) {
             arrayOfKeys.push(decodeURIComponent(splitQuery[0]));
             splitQuery[1] = decodeURIComponent(splitQuery[1]);
 
-            if (!isNaN(Number(splitQuery[1]))) {
-                splitQuery[1] = parseInt(splitQuery[1]);
+            if (!isNaN(parseInt(splitQuery[1], 10))) {
+                splitQuery[1] = parseInt(splitQuery[1], 10);
             }
+
             if (objOfTypes[splitQuery[1]] !== undefined) {
                 splitQuery[1] = objOfTypes[splitQuery[1]];
             }
+
             arrayOfData.push(splitQuery[1]);
         }
     }
 
     return createObject(arrayOfKeys, arrayOfData);
+}
+
+function queryStringToObject(queryString) {
+    var res = {};
+    var keyValPairs = queryString.split('&');
+
+    res = keyValPairs.reduce(function (reducedValue, currentKeyValue) {
+        var key = currentKeyValue.split('=')[0];
+        var stringifiedValue = currentKeyValue.split('=')[1];
+
+        return reducedValue;
+    }, {});
+
+    return res;
 }
 
 // Найти и исправить объект в структуре
@@ -387,6 +409,12 @@ function getUnique(list) {
     }
 
     return resultArray;
+}
+
+function getUnique(list) {
+    return [].filter.call(list, function(item, index, arrayToSearch) {
+        return index === 0 || [].lastIndexOf.call(arrayToSearch, item, index - 1) === -1;
+    });
 }
 
 // Реализовать счетчик, сокрыв детали реализации
